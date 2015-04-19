@@ -9,7 +9,7 @@ package com.wix.pay.creditcard
 
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
 import org.specs2.mutable.SpecificationWithJUnit
-import com.wix.pay.creditcard.PublicCreditCard._
+import com.wix.pay.creditcard.PublicCreditCard.toAdditionalPublicCreditCardFields
 
 
 /** Unit-Test for the [[CreditCard]] class.
@@ -24,7 +24,7 @@ class CreditCardTest extends SpecificationWithJUnit {
                    additionalFields: Matcher[Option[PublicCreditCardOptionalFields]] = AlwaysMatcher()): Matcher[CreditCard] = {
     number ^^ { (_: CreditCard).number aka "number" } and
       expiration ^^ { (_: CreditCard).expiration aka "expiration" } and
-      csc ^^ { (_: CreditCard).csc aka "csc" } and
+      csc ^^ { (_: CreditCard).additionalFields.fold[Option[String]](None)(_.csc) aka "csc" } and
       additionalFields ^^ { cc: CreditCard => cc.additionalFields map toAdditionalPublicCreditCardFields aka "additional fields" }
   }
 

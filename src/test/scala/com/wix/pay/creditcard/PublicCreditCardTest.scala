@@ -9,7 +9,7 @@ package com.wix.pay.creditcard
 
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
 import org.specs2.mutable.SpecificationWithJUnit
-import com.wix.pay.creditcard.CreditCard._
+import PublicCreditCard.toAdditionalPublicCreditCardFields
 
 
 /** Unit-Test for the [[PublicCreditCard]] class.
@@ -37,7 +37,8 @@ class PublicCreditCardTest extends SpecificationWithJUnit {
       val holderName = Option("holder name")
       val billingAddress = Option("billing address")
       val billingPostalCode = Option("billing postal code")
-      val additionalFields = Some(PublicCreditCardOptionalFields(
+      val additionalFields = Some(CreditCardOptionalFields(
+        csc = csc,
         holderId = holderId,
         holderName = holderName,
         billingAddress = billingAddress,
@@ -45,14 +46,13 @@ class PublicCreditCardTest extends SpecificationWithJUnit {
       val creditCard = CreditCard(
         number = ccNumber,
         expiration = expiration,
-        csc = csc,
         additionalFields = additionalFields map (_.copy()))
 
       PublicCreditCard(creditCard) must
         beCreditCard(
           lastDigits = ===(lastDigits),
           expiration = ===(expiration),
-          additionalFields = ===(additionalFields))
+          additionalFields = ===(additionalFields.map(toAdditionalPublicCreditCardFields)))
     }
   }
 }

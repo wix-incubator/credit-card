@@ -6,7 +6,8 @@
 \*                |/                                                 */
 package com.wix.pay.creditcard
 
-/** This class is
+
+/** Container that holds optional fields of a Credit Card (e.g., csc, holder ID).
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */

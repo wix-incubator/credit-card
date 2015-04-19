@@ -7,16 +7,12 @@
 package com.wix.pay.creditcard
 
 
-import scala.language.implicitConversions
-
-
 /** Represents a credit card.
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
 case class CreditCard(number: String,
                       expiration: YearMonth,
-                      csc: Option[String] = None,
                       additionalFields: Option[CreditCardOptionalFields] = None) extends Serializable
 
 /** The companion object of the [[CreditCard]] case class, introduces means to create a credit card based on a given
@@ -30,19 +26,17 @@ object CreditCard {
     CreditCard(
       number = number,
       expiration = creditCard.expiration,
-      csc = Option(csc),
-      additionalFields = creditCard.additionalFields map (_.copy()))
+      additionalFields = creditCard.additionalFields.map (toAdditionalCreditCardFields(_).copy(csc = Option(csc))))
   }
 
   def apply(creditCard: PublicCreditCard, number: String): CreditCard = {
     CreditCard(
       number = number,
       expiration = creditCard.expiration,
-      csc = None,
-      additionalFields = creditCard.additionalFields map (_.copy()))
+      additionalFields = creditCard.additionalFields.map (toAdditionalCreditCardFields(_).copy(csc = None)))
   }
   
-  implicit def toAdditionalCreditCardFields(additionalFields: PublicCreditCardOptionalFields): CreditCardOptionalFields = {
+  def toAdditionalCreditCardFields(additionalFields: PublicCreditCardOptionalFields): CreditCardOptionalFields = {
     CreditCardOptionalFields(
       csc = None,
       holderId = additionalFields.holderId,
