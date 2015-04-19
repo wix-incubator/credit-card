@@ -4,7 +4,10 @@
 **   / // // / //   |            http://www.wix.com/                 **
 **   \__/|__/_//_/| |                                                **
 \*                |/                                                 */
-package com.wix.pay.credit.card
+package com.wix.pay.creditcard
+
+
+import scala.language.implicitConversions
 
 
 /** Represents a credit card.
@@ -14,10 +17,7 @@ package com.wix.pay.credit.card
 case class CreditCard(number: String,
                       expiration: YearMonth,
                       csc: Option[String] = None,
-                      holderId: Option[String] = None,
-                      holderName: Option[String] = None,
-                      billingAddress: Option[String] = None,
-                      billingPostalCode: Option[String] = None) extends Serializable
+                      additionalFields: Option[CreditCardOptionalFields] = None) extends Serializable
 
 /** The companion object of the [[CreditCard]] case class, introduces means to create a credit card based on a given
   * [[PublicCreditCard]].
@@ -31,10 +31,7 @@ object CreditCard {
       number = number,
       expiration = creditCard.expiration,
       csc = Option(csc),
-      holderId = creditCard.holderId,
-      holderName = creditCard.holderName,
-      billingAddress = creditCard.billingAddress,
-      billingPostalCode = creditCard.billingPostalCode)
+      additionalFields = creditCard.additionalFields map (_.copy()))
   }
 
   def apply(creditCard: PublicCreditCard, number: String): CreditCard = {
@@ -42,9 +39,15 @@ object CreditCard {
       number = number,
       expiration = creditCard.expiration,
       csc = None,
-      holderId = creditCard.holderId,
-      holderName = creditCard.holderName,
-      billingAddress = creditCard.billingAddress,
-      billingPostalCode = creditCard.billingPostalCode)
+      additionalFields = creditCard.additionalFields map (_.copy()))
+  }
+  
+  implicit def toAdditionalCreditCardFields(additionalFields: PublicCreditCardOptionalFields): CreditCardOptionalFields = {
+    CreditCardOptionalFields(
+      csc = None,
+      holderId = additionalFields.holderId,
+      holderName = additionalFields.holderName,
+      billingAddress = additionalFields.billingAddress,
+      billingPostalCode = additionalFields.billingPostalCode)
   }
 }

@@ -4,8 +4,7 @@
 **   / // // / //   |            http://www.wix.com/                 **
 **   \__/|__/_//_/| |                                                **
 \*                |/                                                 */
-package com.wix.pay.credit.card
-
+package com.wix.pay.creditcard
 
 /** A container for year and month pair, mainly used for credit card expiration date.
   *

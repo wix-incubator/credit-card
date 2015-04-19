@@ -4,11 +4,12 @@
 **   / // // / //   |            http://www.wix.com/                 **
 **   \__/|__/_//_/| |                                                **
 \*                |/                                                 */
-package com.wix.pay.credit.card
+package com.wix.pay.creditcard
 
 
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
 import org.specs2.mutable.SpecificationWithJUnit
+import com.wix.pay.creditcard.CreditCard._
 
 
 /** Unit-Test for the [[PublicCreditCard]] class.
@@ -19,16 +20,10 @@ class PublicCreditCardTest extends SpecificationWithJUnit {
 
   def beCreditCard(lastDigits: Matcher[String] = AlwaysMatcher(),
                    expiration: Matcher[YearMonth] = AlwaysMatcher(),
-                   holderId: Matcher[Option[String]] = AlwaysMatcher(),
-                   holderName: Matcher[Option[String]] = AlwaysMatcher(),
-                   billingAddress: Matcher[Option[String]] = AlwaysMatcher(),
-                   billingPostalCode: Matcher[Option[String]] = AlwaysMatcher()): Matcher[PublicCreditCard] = {
+                   additionalFields: Matcher[Option[PublicCreditCardOptionalFields]] = AlwaysMatcher()): Matcher[PublicCreditCard] = {
     lastDigits ^^ { (_: PublicCreditCard).lastDigits aka "number" } and
       expiration ^^ { (_: PublicCreditCard).expiration aka "expiration" } and
-      holderId ^^ { (_: PublicCreditCard).holderId aka "holderId" } and
-      holderName ^^ { (_: PublicCreditCard).holderName aka "holderName" } and
-      billingAddress ^^ { (_: PublicCreditCard).billingAddress aka "billingAddress" } and
-      billingPostalCode ^^ { (_: PublicCreditCard).billingPostalCode aka "billingPostalCode" }
+      additionalFields ^^ { (_: PublicCreditCard).additionalFields aka "additional fields" }
   }
 
 
@@ -42,24 +37,22 @@ class PublicCreditCardTest extends SpecificationWithJUnit {
       val holderName = Option("holder name")
       val billingAddress = Option("billing address")
       val billingPostalCode = Option("billing postal code")
-
+      val additionalFields = Some(PublicCreditCardOptionalFields(
+        holderId = holderId,
+        holderName = holderName,
+        billingAddress = billingAddress,
+        billingPostalCode = billingPostalCode))
       val creditCard = CreditCard(
         number = ccNumber,
         expiration = expiration,
         csc = csc,
-        holderId = holderId,
-        holderName = holderName,
-        billingAddress = billingAddress,
-        billingPostalCode = billingPostalCode)
+        additionalFields = additionalFields map (_.copy()))
 
       PublicCreditCard(creditCard) must
         beCreditCard(
           lastDigits = ===(lastDigits),
           expiration = ===(expiration),
-          holderId = ===(holderId),
-          holderName = ===(holderName),
-          billingAddress = ===(billingAddress),
-          billingPostalCode = ===(billingPostalCode))
+          additionalFields = ===(additionalFields))
     }
   }
 }

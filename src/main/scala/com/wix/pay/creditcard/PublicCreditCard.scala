@@ -4,7 +4,10 @@
 **   / // // / //   |            http://www.wix.com/                 **
 **   \__/|__/_//_/| |                                                **
 \*                |/                                                 */
-package com.wix.pay.credit.card
+package com.wix.pay.creditcard
+
+
+import scala.language.implicitConversions
 
 
 /** Represents a credit card, which can be shown Public.
@@ -15,10 +18,7 @@ package com.wix.pay.credit.card
   */
 case class PublicCreditCard(lastDigits: String,
                             expiration: YearMonth,
-                            holderId: Option[String] = None,
-                            holderName: Option[String] = None,
-                            billingAddress: Option[String] = None,
-                            billingPostalCode: Option[String] = None)
+                            additionalFields: Option[PublicCreditCardOptionalFields] = None) extends Serializable
 
 /** The companion object of the [[PublicCreditCard]] case class, introduces means to create a public credit card based
   * on a given [[CreditCard]].
@@ -31,9 +31,15 @@ object PublicCreditCard {
     PublicCreditCard(
       lastDigits = creditCard.number.takeRight(4),
       expiration = creditCard.expiration,
-      holderId = creditCard.holderId,
-      holderName = creditCard.holderName,
-      billingAddress = creditCard.billingAddress,
-      billingPostalCode = creditCard.billingPostalCode)
+      additionalFields = creditCard.additionalFields map (_.copy()))
+  }
+  
+
+  implicit def toAdditionalPublicCreditCardFields(additionalFields: CreditCardOptionalFields): PublicCreditCardOptionalFields = {
+    PublicCreditCardOptionalFields(
+      holderId = additionalFields.holderId,
+      holderName = additionalFields.holderName,
+      billingAddress = additionalFields.billingAddress,
+      billingPostalCode = additionalFields.billingPostalCode)
   }
 }
