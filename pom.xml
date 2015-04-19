@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wixpres.pay</groupId>
+    <groupId>com.wixpress.pay</groupId>
     <artifactId>credit-card</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <description>Credit Cards Model</description>
 
     <parent>
         <groupId>com.wixpress.common</groupId>
@@ -15,10 +16,21 @@
         <relativePath />
     </parent>
 
+    <developers>
+        <developer>
+            <name>Raz, Ohad</name>
+            <email>ohadr@wix.com</email>
+            <roles>
+                <role>owner</role>
+            </roles>
+        </developer>
+    </developers>
+
     <dependencies>
         <dependency>
             <groupId>com.wixpress.common</groupId>
             <artifactId>wix-test-framework</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
