@@ -7,12 +7,13 @@
 package com.wix.pay.creditcard
 
 
-/** Container that holds optional fields of a Public Credit Card (e.g., holder ID, billing address).
+/** Defines the common attributes of a Public Credit Card.
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields(override val holderId: Option[String] = None,
-                                          override val holderName: Option[String] = None,
-                                          override val billingAddress: Option[String] = None,
-                                          override val billingPostalCode: Option[String] = None)
-  extends Serializable with CommonPublicCreditCardFields
+trait CommonPublicCreditCardFields {
+  val holderId: Option[String]
+  val holderName: Option[String]
+  val billingAddress: Option[String]
+  val billingPostalCode: Option[String]
+}

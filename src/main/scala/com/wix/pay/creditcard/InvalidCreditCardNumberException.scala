@@ -7,12 +7,10 @@
 package com.wix.pay.creditcard
 
 
-/** Container that holds optional fields of a Public Credit Card (e.g., holder ID, billing address).
+/** An [[Exception]] that indicates that a Credit Card number is invalid (e.g., does not pass ''Luhn'' validation,
+  * or ''Isracard'' validation, in the case of ''Isracard'' credit cards).
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields(override val holderId: Option[String] = None,
-                                          override val holderName: Option[String] = None,
-                                          override val billingAddress: Option[String] = None,
-                                          override val billingPostalCode: Option[String] = None)
-  extends Serializable with CommonPublicCreditCardFields
+case class InvalidCreditCardNumberException(message: String = null,
+                                            cause:Throwable = null) extends RuntimeException(message, cause)
