@@ -32,7 +32,16 @@ case class PublicCreditCard private (lastDigits: String,
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
 object PublicCreditCard {
+
+  /** Credit card network IDs.
+    * Existing values are guaranteed to never change (users are allowed to persist them).
+    */
   object Networks {
+    /** Contains the full list of networks.
+      * New values may be added in the future; existing values will never be removed.
+      */
+    val all = Set(amex, dankort, discover, isracard, jcb, maestro, masterCard, unionPay, visa);
+
     val amex = "amex"
     val dankort = "dankort"
     val discover = "discover"
