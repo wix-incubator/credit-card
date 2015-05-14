@@ -38,6 +38,7 @@ object PublicCreditCard {
   object Networks {
     val amex = "amex"
     val dankort = "dankort"
+    val diners = "diners"
     val discover = "discover"
     val isracard = "isracard"
     val jcb = "jcb"
@@ -54,6 +55,7 @@ object PublicCreditCard {
 
   val amexRegex = """^3([47]\d{3}|569[04]|[23]\d{3})\d{10}$""".r
   val dankortRegex = """^5019(34)\d{10}$""".r
+  val dinersRegex = """^36409\d{9}$""".r
   val discoverRegex = """^(6011\d{2}|65\d{4}|64[4-9]\d{3}|601300|3[^547]\d{4})\d{10}$""".r
   val isracardRegex = """^\d{8,9}$""".r
   val jcbRegex = """^35(?:2[89]|[3-8]\d)\d{12}$""".r
@@ -103,6 +105,7 @@ object PublicCreditCard {
     creditCardNumber match {
       case amexRegex(_*) => Some(Networks.amex)
       case dankortRegex(_*) => Some(Networks.dankort)
+      case dinersRegex(_*) => Some(Networks.diners)
       case discoverRegex(_*) => Some(Networks.discover)
       case isracardRegex(_*) => Some(Networks.isracard)
       case jcbRegex(_*) => Some(Networks.jcb)

@@ -107,7 +107,7 @@ class PublicCreditCardTest extends SpecWithJUnit {
   "network" should {
     "identify networks according to rules described at http://en.wikipedia.org/wiki/Bank_card_number and " +
       "according to results of https://www.bindb.com/bin-database.html" in {
-      val lengths = Map("amex" -> 15)
+      val lengths = Map("amex" -> 15, "diners" -> 14)
       val networksResourceInputStream = getClass.getClassLoader.getResourceAsStream("networks.txt")
       val creditCard: String => CreditCard = creditCardNumber => {
         CreditCard(
