@@ -32,16 +32,10 @@ case class PublicCreditCard private (lastDigits: String,
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
 object PublicCreditCard {
-
   /** Credit card network IDs.
     * Existing values are guaranteed to never change (users are allowed to persist them).
     */
   object Networks {
-    /** Contains the full list of networks.
-      * New values may be added in the future; existing values will never be removed.
-      */
-    val all = Set(amex, dankort, discover, isracard, jcb, maestro, masterCard, unionPay, visa);
-
     val amex = "amex"
     val dankort = "dankort"
     val discover = "discover"
@@ -51,6 +45,11 @@ object PublicCreditCard {
     val masterCard = "mastercard"
     val unionPay = "unionpay"
     val visa = "visa"
+
+    /** Contains the full list of networks.
+      * New values may be added in the future; existing values will never be removed.
+      */
+    val all = Set(amex, dankort, discover, isracard, jcb, maestro, masterCard, unionPay, visa);
   }
 
   val amexRegex = """^3([47]\d{3}|569[04]|[23]\d{3})\d{10}$""".r
