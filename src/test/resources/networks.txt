@@ -12944,6 +12944,7 @@
 364870,discover
 364876,discover
 364877,discover
+365564,diners
 364878,discover
 366762,discover
 367000,discover
