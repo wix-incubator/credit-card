@@ -7,11 +7,10 @@
 package com.wix.pay.creditcard
 
 
-import scala.io.Source
-import org.specs2.execute.Result
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
 import org.specs2.matcher.MustMatchers._
 import org.specs2.mutable.SpecWithJUnit
+import com.wix.pay.creditcard.networks.Networks
 import com.wix.pay.creditcard.validators.LuhnValidator
 
 
@@ -90,7 +89,7 @@ class PublicCreditCardTest extends SpecWithJUnit {
     }
 
     "populate a corresponding network" in {
-      val masterCardNumber = "5100000000000008"
+      val masterCardNumber = generateLuhnValid("51", 16)
       val creditCard = CreditCard(
         number = masterCardNumber,
         expiration = expiration)
@@ -99,31 +98,7 @@ class PublicCreditCardTest extends SpecWithJUnit {
         beCreditCard(
           lastDigits = ===(masterCardNumber.takeRight(4)),
           expiration = ===(expiration),
-          network = beSome(PublicCreditCard.Networks.masterCard))
-    }
-  }
-
-
-  "network" should {
-    "identify networks according to rules described at http://en.wikipedia.org/wiki/Bank_card_number and " +
-      "according to results of https://www.bindb.com/bin-database.html" in {
-      val lengths = Map("amex" -> 15, "diners" -> 14)
-      val networksResourceInputStream = getClass.getClassLoader.getResourceAsStream("networks.txt")
-      val creditCard: String => CreditCard = creditCardNumber => {
-        CreditCard(
-          number = creditCardNumber,
-          expiration = expiration)
-      }
-
-      Result.foreach(Source.fromInputStream(networksResourceInputStream).getLines().toSeq) { line =>
-        val arr = line.split(',')
-        val (bin, network) = (arr(0).trim, arr(1).trim)
-        val length = lengths.getOrElse(network, 16)
-        val number = generateLuhnValid(bin, length)
-        val card = PublicCreditCard(creditCard(number))
-
-        card.network must beSome(network)
-      }
+          network = beSome(Networks.masterCard))
     }
   }
 }
