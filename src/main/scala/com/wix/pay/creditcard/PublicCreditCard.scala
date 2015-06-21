@@ -9,8 +9,6 @@ package com.wix.pay.creditcard
 
 import com.wix.pay.creditcard.networks.Networks
 
-import scala.beans.BeanProperty
-
 
 /** Represents a credit card, which can be shown Public.
   * As such, several details are removed (in comparison to the [[CreditCard]]), such as the full
@@ -18,10 +16,10 @@ import scala.beans.BeanProperty
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCard private (@BeanProperty lastDigits: String,
-                                     @BeanProperty expiration: YearMonth,
-                                     @BeanProperty network: Option[String],
-                                     @BeanProperty additionalFields: Option[PublicCreditCardOptionalFields])
+case class PublicCreditCard private (lastDigits: String,
+                                     expiration: YearMonth,
+                                     network: Option[String],
+                                     additionalFields: Option[PublicCreditCardOptionalFields])
     extends Serializable with CommonPublicCreditCardFields {
 
   override val holderId: Option[String] = additionalFields flatMap (_.holderId)
