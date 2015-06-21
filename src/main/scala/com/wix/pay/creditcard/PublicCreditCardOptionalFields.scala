@@ -13,8 +13,9 @@ import scala.beans.BeanProperty
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields(@BeanProperty override val holderId: Option[String] = None,
-                                          @BeanProperty override val holderName: Option[String] = None,
-                                          @BeanProperty override val billingAddress: Option[String] = None,
-                                          @BeanProperty override val billingPostalCode: Option[String] = None)
-  extends Serializable with CommonPublicCreditCardFields
+case class PublicCreditCardOptionalFields(@BeanProperty holderId: Option[String] = None,
+                                          @BeanProperty holderName: Option[String] = None,
+                                          @BeanProperty billingAddress: Option[String] = None,
+                                          @BeanProperty billingPostalCode: Option[String] = None)
+  extends Serializable with CommonPublicCreditCardFields {
+}
