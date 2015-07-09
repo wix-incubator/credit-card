@@ -8,8 +8,8 @@ package com.wix.pay.creditcard
 
 
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
-import org.specs2.mutable.{SpecWithJUnit}
 import org.specs2.matcher.MustMatchers._
+import org.specs2.mutable.SpecWithJUnit
 
 
 /** Unit-Test for the [[CreditCard]] class.
