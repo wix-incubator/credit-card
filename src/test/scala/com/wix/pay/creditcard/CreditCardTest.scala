@@ -37,7 +37,7 @@ class CreditCardTest extends SpecWithJUnit {
     val holderName = Option("holder name")
     val billingAddress = Option("billing address")
     val billingPostalCode = Option("billing postal code")
-    val additionalFields = PublicCreditCardOptionalFields(holderId,
+    val additionalFields = new PublicCreditCardOptionalFields(holderId,
       holderName,
       billingAddress,
       billingPostalCode)

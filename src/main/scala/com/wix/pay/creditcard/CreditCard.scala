@@ -30,7 +30,7 @@ case class CreditCard(number: String,
   override val holderName: Option[String] = additionalFields flatMap (_.holderName)
   override val billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
   override val billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
-
+  override val billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
   private def validator: Validator = {
     object Isracard {
       def unapply(number: String): Boolean = {

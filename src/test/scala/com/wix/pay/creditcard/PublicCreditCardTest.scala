@@ -7,11 +7,11 @@
 package com.wix.pay.creditcard
 
 
-import org.specs2.matcher.{AlwaysMatcher, Matcher}
-import org.specs2.matcher.MustMatchers._
-import org.specs2.mutable.SpecWithJUnit
 import com.wix.pay.creditcard.networks.Networks
 import com.wix.pay.creditcard.validators.LuhnValidator
+import org.specs2.matcher.MustMatchers._
+import org.specs2.matcher.{AlwaysMatcher, Matcher}
+import org.specs2.mutable.SpecWithJUnit
 
 
 /** Unit-Test for the [[PublicCreditCard]] class.
@@ -52,7 +52,7 @@ class PublicCreditCardTest extends SpecWithJUnit {
 
   "Converting Credit Card to a public credit card" should {
     "use the data from the credit card" in {
-      val publicAdditionalFields = PublicCreditCardOptionalFields(
+      val publicAdditionalFields = new PublicCreditCardOptionalFields(
         holderId = holderId,
         holderName = holderName,
         billingAddress = billingAddress,

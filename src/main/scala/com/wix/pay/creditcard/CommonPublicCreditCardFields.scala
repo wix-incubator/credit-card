@@ -16,4 +16,5 @@ trait CommonPublicCreditCardFields {
   val holderName: Option[String]
   val billingAddress: Option[String]
   val billingPostalCode: Option[String]
+  val billingAddressDetailed: Option[AddressDetailed]
 }

@@ -26,6 +26,8 @@ case class PublicCreditCard private (lastDigits: String,
   override val billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
   override val billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
   override val holderName: Option[String] = additionalFields flatMap (_.holderName)
+  override val billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
+
 }
 
 
@@ -57,7 +59,7 @@ object PublicCreditCard {
 
   def toAdditionalCreditCardFields(additionalFields: CreditCardOptionalFields): Option[PublicCreditCardOptionalFields] = {
     additionalFields.publicFields map (fields =>
-      PublicCreditCardOptionalFields(
+      new PublicCreditCardOptionalFields(
         holderId = fields.holderId,
         holderName = fields.holderName,
         billingAddress = fields.billingAddress,

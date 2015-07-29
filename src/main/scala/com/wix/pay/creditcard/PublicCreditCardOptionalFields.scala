@@ -11,8 +11,21 @@ package com.wix.pay.creditcard
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields(holderId: Option[String] = None,
+case class PublicCreditCardOptionalFields private (holderId: Option[String] = None,
                                           holderName: Option[String] = None,
                                           billingAddress: Option[String] = None,
-                                          billingPostalCode: Option[String] = None)
-  extends Serializable with CommonPublicCreditCardFields
+                                          billingPostalCode: Option[String] = None,
+                                          billingAddressDetailed : Option[AddressDetailed] = None )
+  extends Serializable with CommonPublicCreditCardFields {
+  def this(holderId: Option[String] ,
+           holderName: Option[String] ,
+           billingAddress: Option[String] ,
+           billingPostalCode: Option[String] ) = this(holderId,holderName,billingAddress,billingPostalCode,None)
+
+  def this(holderId: Option[String],
+           holderName: Option[String],
+           billingAddressDetailed: Option[AddressDetailed]) =
+             this(holderId,holderName,billingAddressDetailed map(_.composedAddress),
+               billingAddressDetailed.flatMap(_.postalCode),billingAddressDetailed)
+
+}

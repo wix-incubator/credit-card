@@ -10,6 +10,7 @@ package com.wix.pay.creditcard
 import org.specs2.matcher.{AlwaysMatcher, Matcher}
 import org.specs2.matcher.MustMatchers._
 import org.specs2.mutable.SpecWithJUnit
+import java.util.Locale
 
 
 /** Unit-Test for the [[CreditCardOptionalFields]] class.
@@ -23,12 +24,14 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
                          holderId: Matcher[Option[String]] = AlwaysMatcher(),
                          holderName: Matcher[Option[String]] = AlwaysMatcher(),
                          billingAddress: Matcher[Option[String]] = AlwaysMatcher(),
-                         billingPostalCode: Matcher[Option[String]] = AlwaysMatcher()): Matcher[CreditCardOptionalFields] = {
+                         billingPostalCode: Matcher[Option[String]] = AlwaysMatcher(),
+                         billingAddressDetailed: Matcher[Option[AddressDetailed]]  = AlwaysMatcher()): Matcher[CreditCardOptionalFields] = {
     csc ^^ { (_: CreditCardOptionalFields).csc aka "csc" } and
       holderId ^^ { (_: CreditCardOptionalFields).holderId aka "holder ID" } and
       holderName ^^ { (_: CreditCardOptionalFields).holderName aka "holder name" } and
       billingAddress ^^ { (_: CreditCardOptionalFields).billingAddress aka "billing address" } and
-      billingPostalCode ^^ { (_: CreditCardOptionalFields).billingPostalCode aka "billing postal code" }
+      billingPostalCode ^^ { (_: CreditCardOptionalFields).billingPostalCode aka "billing postal code" } and
+      billingAddressDetailed ^^ { (_: CreditCardOptionalFields).billingAddressDetailed aka "billing address detailed"}
   }
 
   "specifying fields" should {
@@ -49,6 +52,8 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
     val holderName = "holder name"
     val billingAddress = "billing address"
     val billingPostalCode = "billing postal code"
+    val billingAddressDetailed = Some(AddressDetailed(Some("Street"),Some("City"),Some("State"),Some("PostalCode"),Some(new Locale("US"))))
+    val billingAddressDetailedIgnored = Some(AddressDetailed(Some("StreetIgnored"),None,None,None,None))
 
     "use specified missing csc" in {
       val other = CreditCardOptionalFields(csc = Some(csc))
@@ -72,8 +77,7 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
     }
 
     "use specified missing holder ID" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderId = Some(holderId))))
+      val other = CreditCardOptionalFields.withFields(holderId = Some(holderId))
 
       CreditCardOptionalFields(publicFields = None).fillMissing(other) must
         beCreditCardFields(holderId = beSome(holderId))
@@ -82,35 +86,26 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
     "use original holder ID, if not missing" in {
       val other = CreditCardOptionalFields(publicFields = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderId = Some(holderId)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderId = Some(holderId)).fillMissing(other) must
         beCreditCardFields(holderId = beSome(holderId))
     }
 
     "use original holder ID, if not missing (even if specified in override)" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderId = Some("to be ignored"))))
+      val other = CreditCardOptionalFields.withFields(holderId = Some("to be ignored"))
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderId = Some(holderId)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderId = Some(holderId)).fillMissing(other) must
         beCreditCardFields(holderId = beSome(holderId))
     }
 
     "set None as holder ID, if missing, but not specified in override" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderId = None)))
+      val other = CreditCardOptionalFields.withFields(holderId = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderId = None))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderId = None).fillMissing(other) must
         beCreditCardFields(holderId = beNone)
     }
 
     "use specified missing holder name" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderName = Some(holderName))))
+      val other = CreditCardOptionalFields.withFields(holderName = Some(holderName))
 
       CreditCardOptionalFields(publicFields = None).fillMissing(other) must
         beCreditCardFields(holderName = beSome(holderName))
@@ -119,35 +114,26 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
     "use original holder name, if not missing" in {
       val other = CreditCardOptionalFields(publicFields = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderName = Some(holderName)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderName = Some(holderName)).fillMissing(other) must
         beCreditCardFields(holderName = beSome(holderName))
     }
 
     "use original holder name, if not missing (even if specified in override)" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderName = Some("to be ignored"))))
+      val other = CreditCardOptionalFields.withFields(holderName = Some("to be ignored"))
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderName = Some(holderName)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderName = Some(holderName)).fillMissing(other) must
         beCreditCardFields(holderName = beSome(holderName))
     }
 
     "set None as holder name, if missing, but not specified in override" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        holderName = None)))
+      val other = CreditCardOptionalFields.withFields(holderName = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          holderName = None))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(holderName = None).fillMissing(other) must
         beCreditCardFields(holderName = beNone)
     }
 
     "use specified missing billing address" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingAddress = Some(billingAddress))))
+      val other = CreditCardOptionalFields.withFields(billingAddress = Some(billingAddress))
 
       CreditCardOptionalFields(publicFields = None).fillMissing(other) must
         beCreditCardFields(billingAddress = beSome(billingAddress))
@@ -156,66 +142,84 @@ class CreditCardOptionalFieldsTest extends SpecWithJUnit {
     "use original billing address, if not missing" in {
       val other = CreditCardOptionalFields(publicFields = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingAddress = Some(billingAddress)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingAddress = Some(billingAddress)).fillMissing(other) must
         beCreditCardFields(billingAddress = beSome(billingAddress))
     }
 
     "use original billing address, if not missing (even if specified in override)" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingAddress = Some("to be ignored"))))
+      val other = CreditCardOptionalFields.withFields(billingAddress = Some("to be ignored"))
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingAddress = Some(billingAddress)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingAddress = Some(billingAddress)).fillMissing(other) must
         beCreditCardFields(billingAddress = beSome(billingAddress))
     }
 
     "set None as billing address, if missing, but not specified in override" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingAddress = None)))
+      val other = CreditCardOptionalFields.withFields(billingAddress = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingAddress = None))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingAddress = None).fillMissing(other) must
         beCreditCardFields(billingAddress = beNone)
     }
 
+    "use specified missing billing detailed address" in {
+      val other = CreditCardOptionalFields.empty().withBillingAddressDetailed(billingAddressDetailed)
+
+      CreditCardOptionalFields(publicFields = None).fillMissing(other) must
+        beCreditCardFields(billingAddressDetailed = ===(billingAddressDetailed))
+    }
+
+    "use original billing address detailed, if not missing" in {
+      val other = CreditCardOptionalFields(publicFields = None)
+
+      CreditCardOptionalFields.empty().withBillingAddressDetailed(billingAddressDetailed).fillMissing(other) must
+        beCreditCardFields(billingAddressDetailed = ===(billingAddressDetailed))
+    }
+
+    "use original billing address detailed, if not missing (even if specified in override)" in {
+      val other = CreditCardOptionalFields.empty().withBillingAddressDetailed(billingAddressDetailedIgnored)
+
+      CreditCardOptionalFields.empty().withBillingAddressDetailed(billingAddressDetailed).fillMissing(other) must
+        beCreditCardFields(billingAddressDetailed = ===(billingAddressDetailed))
+    }
+
+    "set None as billing address detailed, if missing, but not specified in override" in {
+      val other = CreditCardOptionalFields.empty()
+
+      CreditCardOptionalFields.empty().fillMissing(other) must
+        beCreditCardFields(billingAddressDetailed = beNone)
+    }
+
+    "have billing address composed of billing address detailed " in {
+      val fields = CreditCardOptionalFields.empty().withBillingAddressDetailed(billingAddressDetailed)
+
+      fields must  beCreditCardFields(billingAddress = beSome(billingAddressDetailed.get.composedAddress))
+    }
+
     "use specified missing billing postal code" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingPostalCode = Some(billingPostalCode))))
+      val other = CreditCardOptionalFields.withFields(billingPostalCode = Some(billingPostalCode))
 
       CreditCardOptionalFields(publicFields = None).fillMissing(other) must
         beCreditCardFields(billingPostalCode = beSome(billingPostalCode))
     }
 
+
     "use original billing postal code, if not missing" in {
       val other = CreditCardOptionalFields(publicFields = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingPostalCode = Some(billingPostalCode)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingPostalCode = Some(billingPostalCode)).fillMissing(other) must
         beCreditCardFields(billingPostalCode = beSome(billingPostalCode))
     }
 
     "use original billing postal code, if not missing (even if specified in override)" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingPostalCode = Some("to be ignored"))))
+      val other = CreditCardOptionalFields.withFields(billingPostalCode = Some("to be ignored"))
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingPostalCode = Some(billingPostalCode)))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingPostalCode = Some(billingPostalCode)).fillMissing(other) must
         beCreditCardFields(billingPostalCode = beSome(billingPostalCode))
     }
 
     "set None as billing postal code, if missing, but not specified in override" in {
-      val other = CreditCardOptionalFields(publicFields = Some(PublicCreditCardOptionalFields(
-        billingPostalCode = None)))
+      val other = CreditCardOptionalFields.withFields(billingPostalCode = None)
 
-      CreditCardOptionalFields(
-        publicFields = Some(PublicCreditCardOptionalFields(
-          billingPostalCode = None))).fillMissing(other) must
+      CreditCardOptionalFields.withFields(billingPostalCode = None).fillMissing(other) must
         beCreditCardFields(billingPostalCode = beNone)
     }
   }
