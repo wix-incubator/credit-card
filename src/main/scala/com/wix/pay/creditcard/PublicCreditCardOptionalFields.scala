@@ -27,8 +27,8 @@ case class PublicCreditCardOptionalFields private (holderId: Option[String],
     billingPostalCode = billingPostalCode,
     billingAddressDetailed = None)
 
-  def this(holderId: Option[String] = None,
-           holderName: Option[String] = None,
+  def this(holderId: Option[String],
+           holderName: Option[String],
            billingAddressDetailed: Option[AddressDetailed]) = this(
     holderId = holderId,
     holderName = holderName,
