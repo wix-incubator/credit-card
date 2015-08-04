@@ -21,30 +21,30 @@
             </roles>
         </developer>
     </developers>
-	
+
 	<issueManagement>
 		<url>https://github.com/wix/credit-card/issues</url>
 		<system>GitHub Issues</system>
-	</issueManagement>	
-	
+	</issueManagement>
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
-	</licenses>	
-	
+	</licenses>
+
 	<scm>
 		<url>https://github.com/wix/credit-card</url>
 		<connection>scm:git:git://github.com/wix/credit-card.git</connection>
 		<developerConnection>scm:git:git@github.com:wix/credit-card.git</developerConnection>
 	</scm>
-	
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
+
 		<scala.version>2.11.6</scala.version>
 		<specs2.version>3.6.1</specs2.version>
 		<credit.card.networks.version>1.0.0</credit.card.networks.version>
@@ -68,7 +68,7 @@
             <artifactId>specs2-core_2.11</artifactId>
             <version>${specs2.version}</version>
             <scope>test</scope>
-        </dependency>		
+        </dependency>
 		<dependency>
             <groupId>org.specs2</groupId>
             <artifactId>specs2-junit_2.11</artifactId>
@@ -76,7 +76,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -86,8 +86,8 @@
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
-	</distributionManagement>	
-	
+	</distributionManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -111,7 +111,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -162,7 +162,7 @@
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
-			</plugin>			
+			</plugin>
         </plugins>
-    </build>	
+    </build>
 </project>
