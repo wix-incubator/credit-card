@@ -4,7 +4,7 @@
 
     <groupId>com.wix.pay</groupId>
     <artifactId>credit-card</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <name>Credit-Card Model</name>
     <description>Credit-Card Model</description>
@@ -25,7 +25,7 @@
         <url>https://github.com/wix/credit-card</url>
         <connection>scm:git:git://github.com/wix/credit-card.git</connection>
         <developerConnection>scm:git:git@github.com:wix/credit-card.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>credit-card-1.2.0</tag>
     </scm>
 
 	<issueManagement>
