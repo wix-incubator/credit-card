@@ -12,7 +12,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.wix.pay</groupId>
   <artifactId>credit-card</artifactId>
-  <version>1.1.2</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
