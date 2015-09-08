@@ -12,5 +12,5 @@ package com.wix.pay.creditcard
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
 trait CommonCreditCardFields extends CommonPublicCreditCardFields {
-  val csc: Option[String]
+  def csc: Option[String]
 }

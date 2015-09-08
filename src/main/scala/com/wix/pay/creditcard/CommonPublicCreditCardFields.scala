@@ -12,9 +12,9 @@ package com.wix.pay.creditcard
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
 trait CommonPublicCreditCardFields {
-  val holderId: Option[String]
-  val holderName: Option[String]
-  val billingAddress: Option[String]
-  val billingPostalCode: Option[String]
-  val billingAddressDetailed: Option[AddressDetailed]
+  def holderId: Option[String]
+  def holderName: Option[String]
+  def billingAddress: Option[String]
+  def billingPostalCode: Option[String]
+  def billingAddressDetailed: Option[AddressDetailed]
 }

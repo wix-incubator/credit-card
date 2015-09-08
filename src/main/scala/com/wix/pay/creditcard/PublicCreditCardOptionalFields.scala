@@ -15,8 +15,9 @@ case class PublicCreditCardOptionalFields private (holderId: Option[String],
                                           holderName: Option[String],
                                           billingAddress: Option[String],
                                           billingPostalCode: Option[String],
-                                          billingAddressDetailed : Option[AddressDetailed])
-  extends Serializable with CommonPublicCreditCardFields {
+                                          billingAddressDetailed: Option[AddressDetailed])
+    extends Serializable with CommonPublicCreditCardFields {
+
   def this(holderId: Option[String] = None,
            holderName: Option[String] = None,
            billingAddress: Option[String] = None,

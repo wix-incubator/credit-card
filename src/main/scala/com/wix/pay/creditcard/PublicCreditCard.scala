@@ -22,11 +22,11 @@ case class PublicCreditCard private (lastDigits: String,
                                      additionalFields: Option[PublicCreditCardOptionalFields])
     extends Serializable with CommonPublicCreditCardFields {
 
-  override val holderId: Option[String] = additionalFields flatMap (_.holderId)
-  override val billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
-  override val billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
-  override val holderName: Option[String] = additionalFields flatMap (_.holderName)
-  override val billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
+  override def holderId: Option[String] = additionalFields flatMap (_.holderId)
+  override def billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
+  override def billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
+  override def holderName: Option[String] = additionalFields flatMap (_.holderName)
+  override def billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
 
 }
 
