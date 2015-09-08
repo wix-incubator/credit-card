@@ -25,12 +25,13 @@ case class CreditCard(number: String,
     throw new InvalidCreditCardNumberException(s"Invalid card number '$number'")
   }
 
-  override val csc: Option[String] = additionalFields flatMap (_.csc)
-  override val holderId: Option[String] = additionalFields flatMap (_.holderId)
-  override val holderName: Option[String] = additionalFields flatMap (_.holderName)
-  override val billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
-  override val billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
-  override val billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
+  override def csc: Option[String] = additionalFields flatMap (_.csc)
+  override def holderId: Option[String] = additionalFields flatMap (_.holderId)
+  override def holderName: Option[String] = additionalFields flatMap (_.holderName)
+  override def billingAddress: Option[String] = additionalFields flatMap (_.billingAddress)
+  override def billingPostalCode: Option[String] = additionalFields flatMap (_.billingPostalCode)
+  override def billingAddressDetailed: Option[AddressDetailed] = additionalFields flatMap(_.billingAddressDetailed)
+
   private def validator: Validator = {
     object Isracard {
       def unapply(number: String): Boolean = {

@@ -15,11 +15,11 @@ case class CreditCardOptionalFields(override val csc: Option[String] = None,
                                     publicFields: Option[PublicCreditCardOptionalFields] = None)
     extends Serializable with CommonCreditCardFields {
 
-  override val holderId: Option[String] = publicFields flatMap(_.holderId)
-  override val holderName: Option[String] = publicFields flatMap(_.holderName)
-  override val billingAddress: Option[String] = publicFields flatMap(_.billingAddress)
-  override val billingPostalCode: Option[String] = publicFields flatMap(_.billingPostalCode)
-  override val billingAddressDetailed: Option[AddressDetailed] = publicFields flatMap(_.billingAddressDetailed)
+  override def holderId: Option[String] = publicFields flatMap(_.holderId)
+  override def holderName: Option[String] = publicFields flatMap(_.holderName)
+  override def billingAddress: Option[String] = publicFields flatMap(_.billingAddress)
+  override def billingPostalCode: Option[String] = publicFields flatMap(_.billingPostalCode)
+  override def billingAddressDetailed: Option[AddressDetailed] = publicFields flatMap(_.billingAddressDetailed)
 
   def withBillingAddressDetailed(billingAddress : Option[AddressDetailed]) : CreditCardOptionalFields = {
     publicFields match {
