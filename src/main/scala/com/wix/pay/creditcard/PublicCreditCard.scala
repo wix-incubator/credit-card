@@ -59,7 +59,7 @@ object PublicCreditCard {
 
   def toAdditionalCreditCardFields(additionalFields: CreditCardOptionalFields): Option[PublicCreditCardOptionalFields] = {
     additionalFields.publicFields map (fields =>
-      new PublicCreditCardOptionalFields(
+      PublicCreditCardOptionalFields(
         holderId = fields.holderId,
         holderName = fields.holderName,
         billingAddress = fields.billingAddress,

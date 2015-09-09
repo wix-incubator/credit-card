@@ -11,26 +11,28 @@ package com.wix.pay.creditcard
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields private (holderId: Option[String],
-                                          holderName: Option[String],
-                                          billingAddress: Option[String],
-                                          billingPostalCode: Option[String],
-                                          billingAddressDetailed: Option[AddressDetailed])
-    extends Serializable with CommonPublicCreditCardFields {
+case class PublicCreditCardOptionalFields private (override val holderId: Option[String],
+                                                   override val holderName: Option[String],
+                                                   override val billingAddress: Option[String],
+                                                   override val billingPostalCode: Option[String],
+                                                   override val billingAddressDetailed: Option[AddressDetailed])
+    extends Serializable with CommonPublicCreditCardFields
 
-  def this(holderId: Option[String] = None,
-           holderName: Option[String] = None,
-           billingAddress: Option[String] = None,
-           billingPostalCode: Option[String] = None) = this(
+object PublicCreditCardOptionalFields  {
+
+  def apply(holderId: Option[String] = None,
+            holderName: Option[String] = None,
+            billingAddress: Option[String] = None,
+            billingPostalCode: Option[String] = None): PublicCreditCardOptionalFields = PublicCreditCardOptionalFields(
     holderId = holderId,
     holderName = holderName,
     billingAddress = billingAddress,
     billingPostalCode = billingPostalCode,
     billingAddressDetailed = None)
 
-  def this(holderId: Option[String],
-           holderName: Option[String],
-           billingAddressDetailed: Option[AddressDetailed]) = this(
+  def apply(holderId: Option[String],
+            holderName: Option[String],
+            billingAddressDetailed: Option[AddressDetailed]): PublicCreditCardOptionalFields = PublicCreditCardOptionalFields(
     holderId = holderId,
     holderName = holderName,
     billingAddress = billingAddressDetailed map(_.composedAddress),

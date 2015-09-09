@@ -24,9 +24,9 @@ case class CreditCardOptionalFields(override val csc: Option[String] = None,
   def withBillingAddressDetailed(billingAddress : Option[AddressDetailed]) : CreditCardOptionalFields = {
     publicFields match {
       case None => copy(publicFields =
-        Some(new PublicCreditCardOptionalFields(holderId = None, holderName = None, billingAddressDetailed = billingAddress)))
+        Some(PublicCreditCardOptionalFields(holderId = None, holderName = None, billingAddressDetailed = billingAddress)))
       case Some(pubFields) => copy(publicFields = Some(
-        new PublicCreditCardOptionalFields(
+        PublicCreditCardOptionalFields(
           holderId =  pubFields.holderId,
           holderName =  pubFields.holderName,
           billingAddressDetailed =  billingAddress
@@ -41,14 +41,14 @@ case class CreditCardOptionalFields(override val csc: Option[String] = None,
     val fieldsMerged = (this.publicFields, other.publicFields) match {
       case (Some(thisFields), Some(otherFields)) =>
         if (bothAddressDetailedIsNull(thisFields, otherFields) )
-          Some(new PublicCreditCardOptionalFields(
+          Some(PublicCreditCardOptionalFields(
             holderId = thisFields.holderId.orElse(otherFields.holderId),
             holderName = thisFields.holderName.orElse(otherFields.holderName),
             billingAddress = thisFields.billingAddress.orElse(otherFields.billingAddress),
             billingPostalCode = thisFields.billingPostalCode.orElse(otherFields.billingPostalCode))
           )
         else {
-          Some(new PublicCreditCardOptionalFields(
+          Some(PublicCreditCardOptionalFields(
             holderId = thisFields.holderId.orElse(otherFields.holderId),
             holderName = thisFields.holderName.orElse(otherFields.holderName),
             billingAddressDetailed = thisFields.billingAddressDetailed.orElse(otherFields.billingAddressDetailed))
@@ -94,7 +94,7 @@ object CreditCardOptionalFields {
         case (None, None, None, None) => None
 
         case _ =>
-          Some(new PublicCreditCardOptionalFields(
+          Some(PublicCreditCardOptionalFields(
             holderId = holderId,
             holderName = holderName,
             billingAddress = billingAddress,
