@@ -22,7 +22,7 @@ case class CreditCard(number: String,
 
 
   if (!validator.validate(number)) {
-    throw new InvalidCreditCardNumberException(s"Invalid card number '$number'")
+    throw InvalidCreditCardNumberException(number)
   }
 
   override def csc: Option[String] = additionalFields flatMap (_.csc)

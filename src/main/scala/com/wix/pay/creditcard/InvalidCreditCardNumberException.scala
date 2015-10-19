@@ -12,5 +12,22 @@ package com.wix.pay.creditcard
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class InvalidCreditCardNumberException(message: String = null,
-                                            cause:Throwable = null) extends RuntimeException(message, cause)
+case class InvalidCreditCardNumberException(number: String,
+                                            cause:Throwable) extends RuntimeException(
+  InvalidCreditCardNumberException.composeMsg(number), cause)
+
+
+/** The Companion Object of the [[InvalidCreditCardNumberException]] class, which introduces means for instantiating
+  * an exception object.
+  *
+  * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
+  */
+object InvalidCreditCardNumberException {
+  def apply(number: String): InvalidCreditCardNumberException = this(composeMsg(number), null)
+  def apply(cause: Throwable): InvalidCreditCardNumberException = this(Option(cause).map(_.toString).orNull, cause)
+  def apply(): InvalidCreditCardNumberException = this(null, null)
+
+  private def composeMsg(number: String): String = {
+    s"Invalid card number '${number.replaceAll("\\d(?=\\d{4})", "X")}'"
+  }
+}

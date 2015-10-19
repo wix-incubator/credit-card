@@ -80,15 +80,16 @@ class CreditCardTest extends SpecWithJUnit {
           additionalFields = beSome(CreditCardOptionalFields(None, Some(additionalFields))))
     }
 
-    "reject invalid number format" in {
+    "reject invalid number format while masking the number, except for the last 4 digits" in {
       val invalidNumber = s"${ccNumber}3"
       val publicCard = PublicCreditCard(
         "1234",
         expiration,
         Some(additionalFields))
+      val maskedNumber = s"XXXXXXXXX2323"
 
       CreditCard(publicCard, invalidNumber) must
-        throwAn[InvalidCreditCardNumberException](message = s"Invalid card number '$invalidNumber'")
+        throwAn[InvalidCreditCardNumberException](message = s"Invalid card number '$maskedNumber'")
     }
   }
 }
