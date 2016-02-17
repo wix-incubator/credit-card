@@ -11,14 +11,14 @@ package com.wix.pay.creditcard
   *
   * @author <a href="mailto:ohadr@wix.com">Raz, Ohad</a>
   */
-case class PublicCreditCardOptionalFields private (override val holderId: Option[String],
-                                                   override val holderName: Option[String],
-                                                   override val billingAddress: Option[String],
-                                                   override val billingPostalCode: Option[String],
-                                                   override val billingAddressDetailed: Option[AddressDetailed])
-    extends Serializable with CommonPublicCreditCardFields
+case class PublicCreditCardOptionalFields private(override val holderId: Option[String],
+                                                  override val holderName: Option[String],
+                                                  override val billingAddress: Option[String],
+                                                  override val billingPostalCode: Option[String],
+                                                  override val billingAddressDetailed: Option[AddressDetailed])
+  extends Serializable with CommonPublicCreditCardFields
 
-object PublicCreditCardOptionalFields  {
+object PublicCreditCardOptionalFields {
 
   def apply(holderId: Option[String] = None,
             holderName: Option[String] = None,
@@ -35,7 +35,12 @@ object PublicCreditCardOptionalFields  {
             billingAddressDetailed: Option[AddressDetailed]): PublicCreditCardOptionalFields = PublicCreditCardOptionalFields(
     holderId = holderId,
     holderName = holderName,
-    billingAddress = billingAddressDetailed map(_.composedAddress),
+    billingAddress = extractBillingAddressFrom(billingAddressDetailed),
     billingPostalCode = billingAddressDetailed.flatMap(_.postalCode),
     billingAddressDetailed = billingAddressDetailed)
+
+  def extractBillingAddressFrom(billingAddressDetailed: Option[AddressDetailed]) =
+    billingAddressDetailed.collect {
+      case addressDetailed if !addressDetailed.isCompletelyEmpty => addressDetailed.composedAddress
+    }
 }
