@@ -1,5 +1,5 @@
 name := "credit-card"
-version := "1.8.0"
+version := "1.8.0-SNAPSHOT"
 organization := "com.wix.pay"
 licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
 
