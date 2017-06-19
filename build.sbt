@@ -21,7 +21,7 @@ scalacOptions ++= {
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "com.wix.pay" %% "credit-card-networks" % "1.3.0",
+  "com.wix.pay" %% "credit-card-networks" % "1.3.0-SNAPSHOT",
   "org.specs2" %% "specs2-core" % "3.8.9" % "test",
   "org.specs2" %% "specs2-junit" % "3.8.9" % "test"
 )
