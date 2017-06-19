@@ -1,7 +1,7 @@
 # Credit Card Model
 Credit cards consist of a mandatory card number and expiry date, and additional (optional) fields like cardholder name, billing address, CSC, etc.
 
-Cards can be anonymized for public display by stripping them of sensitive data, as defined by the PCI-DSS.
+Cards can be made anonymous for public display by stripping them of sensitive data, as defined by the PCI-DSS.
 
 ## Installation
 ### Maven users
