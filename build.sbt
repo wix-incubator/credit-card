@@ -33,9 +33,10 @@ libraryDependencies += {
     "org.json4s" %% "json4s-native" % "3.3.0" % "test"
 }
 
-resolvers += Resolver.sonatypeRepo("public")
-resolvers += Resolver.sonatypeRepo("releases")
-resolvers += Resolver.sonatypeRepo("snapshots")
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
 
 // Publishing
 
@@ -47,7 +48,7 @@ publishTo := {
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    Some("releases" at nexus + "content/repositories/releases")
 }
 
 pomExtra :=
