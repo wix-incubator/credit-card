@@ -47,10 +47,10 @@ publishTo := {
 }
 
 pomExtra :=
-  <url>https://github.com/wix/credit-card-networks</url>
+  <url>https://github.com/wix/credit-card</url>
     <scm>
-      <url>git@github.com:wix/credit-card-networks.git</url>
-      <connection>scm:git:git@github.com:wix/credit-card-networks.git</connection>
+      <url>git@github.com:wix/credit-card.git</url>
+      <connection>scm:git:git@github.com:wix/credit-card.git</connection>
     </scm>
     <developers>
       <developer>
