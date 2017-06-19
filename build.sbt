@@ -33,6 +33,10 @@ libraryDependencies += {
     "org.json4s" %% "json4s-native" % "3.3.0" % "test"
 }
 
+resolvers += Resolver.sonatypeRepo("public")
+resolvers += Resolver.sonatypeRepo("releases")
+resolvers += Resolver.sonatypeRepo("snapshots")
+
 // Publishing
 
 publishMavenStyle := true
