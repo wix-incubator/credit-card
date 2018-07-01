@@ -48,7 +48,7 @@
 
     <properties>
 		<credit.card.networks.version>1.4.0</credit.card.networks.version>
-        <json4s.version>3.5.2</json4s.version>
+        <json4s.version>3.5.4</json4s.version>
     </properties>
 
     <dependencies>
