@@ -2,10 +2,10 @@ package com.wix.pay.creditcard
 
 import java.util.Locale
 
-import org.specs2.mutable.Specification
+import org.specs2.mutable.SpecWithJUnit
 import org.specs2.specification.Scope
 
-class PublicCreditCardOptionalFieldsTest extends Specification {
+class PublicCreditCardOptionalFieldsTest extends SpecWithJUnit {
 
   "PublicCreditCardOptionalFieldsTest" should {
     "fill billingAddress and billingPostalCode correctly" in new ctx {
@@ -20,6 +20,12 @@ class PublicCreditCardOptionalFieldsTest extends Specification {
       fields.billingPostalCode must beNone
     }
 
+    "initialize billingAddressDetailed.postalCode when only given postalCode" in new ctx {
+      val fields: PublicCreditCardOptionalFields = PublicCreditCardOptionalFields(
+        billingPostalCode = Some(billingPostalCode))
+      fields.billingPostalCode must beEqualTo(Some(billingPostalCode))
+      fields.billingAddressDetailed must beEqualTo(Some(AddressDetailed(postalCode = Some(billingPostalCode))))
+    }
   }
 
   trait ctx extends Scope {

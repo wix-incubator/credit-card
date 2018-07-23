@@ -28,7 +28,7 @@ object PublicCreditCardOptionalFields {
     holderName = holderName,
     billingAddress = billingAddress,
     billingPostalCode = billingPostalCode,
-    billingAddressDetailed = None)
+    billingAddressDetailed = billingPostalCode.map { postalCode => AddressDetailed(postalCode = Some(postalCode))})
 
   def apply(holderId: Option[String],
             holderName: Option[String],
